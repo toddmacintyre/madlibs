@@ -11,7 +11,6 @@ const madlibHeader = ( {madlib} ) => {
         Crazy Madlibs!!
       </h1>
       <span style={madStyle} >
-        {madlib}
       </span>
     </div>
   );

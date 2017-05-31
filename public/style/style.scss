@@ -1,5 +1,5 @@
 body {
-  background-color: lightpink;
+  background-color: white;
 
   h1 {
     font-family: 'Rock Salt', cursive;
@@ -9,18 +9,8 @@ body {
     text-align: center;
   }
 
-  // h1 {
-
-  // }
-
-  .madlibHeader-appear h1 {
-    opacity: 0.01;
-  }
-
   .madlibHeader-appear.madlibHeader-appear-active h1 {
-
-    opacity: 1;
-    transform: translateY(50px) rotate(10deg) skew(20deg);
-    transition: opacity .5s ease-in, transform .5s ease-in;
+    transform: translateY(40px) rotate(7deg) skew(20deg);
+    transition: transform .3s ease-in;
   }
 }

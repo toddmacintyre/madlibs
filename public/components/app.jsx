@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import MadlibHeader from './madlibHeader';
-// import MadlibChoices from './madlibOptions.jsx';
+import MadlibChoices from './madlibChoices.jsx';
 import getMadlib from '../../services/madlibExamples.js';
 
 import { CSSTransitionGroup } from 'react-transition-group'
@@ -13,7 +13,13 @@ class App extends Component {
 
     this.state = {
       madlib: getMadlib(0),
+      choicesOrder: [],
+      choicesCount: {},
+      submitted: false,
     }
+
+    this.gatherData = this.gatherData.bind(this);
+    this.submitData = this.submitData.bind(this);
   }
 
   componentWillMount() {
@@ -35,21 +41,43 @@ class App extends Component {
       choicesCount[val] = choicesCount[val] ? choicesCount[val]+ 1 : 1;
     });
 
+    this.setState({choicesOrder});
+    this.setState({choicesCount});
     console.log(choicesCount);
     console.log(choicesOrder);
   }
 
+  gatherData() {
+    console.log('working');
+  }
+
+  submitData() {
+    this.setState({submitted: !this.state.submitted});
+  }
+
   render() {
-    return (
-      <CSSTransitionGroup
-        transitionName="madlibHeader"
-        transitionAppear={true}
-        transitionAppearTimeout={500}
-        transitionEnter={false}
-        transitionLeave={false}>
-        <MadlibHeader madlib={this.state.madlib} />
-      </CSSTransitionGroup>
-    );
+    if (!this.state.submitted) {
+      return (
+        <div>
+          <CSSTransitionGroup
+            transitionName="madlibHeader"
+            transitionAppear={true}
+            transitionAppearTimeout={300}
+            transitionEnter={false}
+            transitionLeave={false}
+          >
+            <MadlibHeader madlib={this.state.madlib} />
+          </CSSTransitionGroup>
+          <MadlibChoices order={this.state.choicesOrder} count={this.state.choicesCount} gatherData={this.gatherData} submitData={this.submitData} />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          submitted
+        </div>
+      );
+    }
   }
 };
 
