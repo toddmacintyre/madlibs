@@ -1,3 +1,5 @@
+@mixin madFun {}
+
 body {
   background-color: white;
 
@@ -13,4 +15,8 @@ body {
     transform: translateY(40px) rotate(7deg) skew(20deg);
     transition: transform .3s ease-in;
   }
+}
+
+.insertedText {
+  color: red;
 }

@@ -6,17 +6,20 @@ import getMadlib from '../../services/madlibExamples.js';
 import { CSSTransitionGroup } from 'react-transition-group'
 
 
-
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       madlib: getMadlib(0),
+      alteredMadlib: '',
+      order: [],
       choicesOrder: [],
       choicesCount: {},
       submitted: false,
     }
+
+    this.sentenceKey = 0;
 
     this.gatherData = this.gatherData.bind(this);
     this.submitData = this.submitData.bind(this);
@@ -25,11 +28,8 @@ class App extends Component {
   componentWillMount() {
     let matches = this.state.madlib.match(/\{([^}]+)\}/g);
     console.log(matches);
-    // matches = matches.map(val => {
-    //   return val.slice(1, val.length - 1);
-    // });
-    // console.log(matches);
 
+    let order = [];
     let choicesOrder = [];
     let choicesCount = {};
 
@@ -38,21 +38,39 @@ class App extends Component {
       if (!choicesCount.hasOwnProperty(val)) {
         choicesOrder.push(val);
       }
-      choicesCount[val] = choicesCount[val] ? choicesCount[val]+ 1 : 1;
+      choicesCount[val] = choicesCount[val] ? choicesCount[val] + 1 : 1;
+      order.push(val);
     });
 
     this.setState({choicesOrder});
     this.setState({choicesCount});
+    this.setState({order});
     console.log(choicesCount);
     console.log(choicesOrder);
+    console.log(order);
   }
 
   gatherData() {
     console.log('working');
   }
 
-  submitData() {
+  submitData(data) {
     this.setState({submitted: !this.state.submitted});
+    console.log(data);
+
+    const entries = this.state.order.reduce((acc, val) => {
+      acc.push(data[val].shift());
+      return acc;
+    }, []);
+
+    const alteredMadlib = this.state.madlib
+      .split(/\{[^}]+\}/)
+      .map(val => {
+        return <span key={`sentenceKey${this.sentenceKey++}`} className="regularText">{val}<span className="insertedText">{entries.shift()}</span></span>;
+      });
+
+    console.log('++++++', alteredMadlib);
+    this.setState({alteredMadlib});
   }
 
   render() {
@@ -72,9 +90,10 @@ class App extends Component {
         </div>
       );
     } else {
+
       return (
         <div>
-          submitted
+          {this.state.alteredMadlib}
         </div>
       );
     }
