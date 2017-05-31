@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "madlib word games",
   "main": "public/index.html",
+  "repository": { "type" : "git",
+    "url" : "https://github.com/toddmacintyre/madlibs.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
