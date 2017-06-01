@@ -21,7 +21,6 @@ class App extends Component {
 
     this.sentenceKey = 0;
 
-    this.gatherData = this.gatherData.bind(this);
     this.submitData = this.submitData.bind(this);
   }
 
@@ -45,19 +44,9 @@ class App extends Component {
     this.setState({choicesOrder});
     this.setState({choicesCount});
     this.setState({order});
-    console.log(choicesCount);
-    console.log(choicesOrder);
-    console.log(order);
-  }
-
-  gatherData() {
-    console.log('working');
   }
 
   submitData(data) {
-    this.setState({submitted: !this.state.submitted});
-    console.log(data);
-
     const entries = this.state.order.reduce((acc, val) => {
       acc.push(data[val].shift());
       return acc;
@@ -69,8 +58,8 @@ class App extends Component {
         return <span key={`sentenceKey${this.sentenceKey++}`} className="regularText">{val}<span className="insertedText">{entries.shift()}</span></span>;
       });
 
-    console.log('++++++', alteredMadlib);
     this.setState({alteredMadlib});
+    this.setState({submitted: !this.state.submitted});
   }
 
   render() {

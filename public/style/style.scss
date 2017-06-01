@@ -18,5 +18,20 @@ body {
 }
 
 .insertedText {
-  color: red;
+  animation: 1.5s ease-out infinite alternate colorz;
+  transition: transform .3s ease-in;
+}
+
+.insertedText:hover {
+  transform: translateY(40px) rotate(7deg) skew(20deg);
+  font-size: 1.5em;
+}
+
+@keyframes colorz {
+  0% {
+    color: purple;
+  }
+  100% {
+    color: red;
+  }
 }
